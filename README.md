@@ -278,10 +278,10 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ## 📞 联系方式
 
-- GitHub: [https://github.com](https://github.com)
-- Twitter: [https://twitter.com](https://twitter.com)
-- Discord: [https://discord.com](https://discord.com)
-
+- CSDN: [博客主页](https://blog.csdn.net/You111801?type=blog)
+- Github: [Github主页](https://github.com/AiW520)
+- Email: 3029956183@qq.com.
+- WeChat: 19103064852.
 ---
 
 **Designed for the Future // Built for Tomorrow**  
