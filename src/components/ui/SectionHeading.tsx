@@ -9,7 +9,7 @@ interface SectionHeadingProps {
   align?: 'left' | 'center';
 }
 
-export function SectionHeading({ title, subtitle, children, align = 'center' }: SectionHeadingProps) {
+export function SectionHeading({ title, subtitle, children, align = 'left' }: SectionHeadingProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref);
 
@@ -20,7 +20,7 @@ export function SectionHeading({ title, subtitle, children, align = 'center' }: 
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        <span className="hud-text mb-4 block">{'>'} SYSTEM_INIT</span>
+        <span className="hud-text mb-4 block">职业观测台 / 数据视图</span>
         <h2 className="section-heading gradient-text mb-4">{title}</h2>
         {subtitle && (
           <p className={`section-subheading ${align === 'center' ? 'mx-auto' : ''}`}>

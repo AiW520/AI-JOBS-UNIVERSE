@@ -35,8 +35,8 @@ export function SkillTreeSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="AI SKILL TREE"
-          subtitle="Master the complete technology stack for the AI era"
+          title="AI 技能树"
+          subtitle="从基础能力到前沿工程，按层级规划成长路径"
         />
 
         <div className="space-y-12">
@@ -45,12 +45,12 @@ export function SkillTreeSection() {
             .map(([level, nodes]) => (
               <div key={level}>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="hud-text text-xs">LEVEL {level}</span>
+                  <span className="hud-text text-xs">第 {level} 层</span>
                   <div className="flex-1 h-px bg-gradient-to-r from-neon-blue/20 to-transparent" />
                 </div>
                 <div className="flex flex-wrap justify-center gap-3">
                   {nodes.map((node, i) => (
-                    <motion.div
+                    <motion.button
                       key={node.id}
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
@@ -58,6 +58,7 @@ export function SkillTreeSection() {
                       transition={{ duration: 0.4, delay: i * 0.05 }}
                       whileHover={{ scale: 1.1, y: -4 }}
                       onClick={() => setSelectedNode(selectedNode?.id === node.id ? null : node)}
+                      aria-pressed={selectedNode?.id === node.id}
                       className={cn(
                         'px-4 py-2 rounded-full text-xs font-mono border cursor-pointer transition-all duration-300',
                         categoryColors[node.category] || 'border-white/20 text-white/50',
@@ -65,28 +66,14 @@ export function SkillTreeSection() {
                       )}
                     >
                       {node.name}
-                    </motion.div>
+                    </motion.button>
                   ))}
                 </div>
+                {selectedNode?.level === Number(level) && <div className="skill-detail" aria-live="polite"><div><h3>{selectedNode.name}</h3><p>{selectedNode.description}</p></div><div><span>关联技能</span><p>{selectedNode.connections.map((id) => (skillTree as SkillNode[]).find(item => item.id === id)?.name || id).join(' · ')}</p></div></div>}
               </div>
             ))}
         </div>
 
-        {selectedNode && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-8 glass p-6 max-w-lg mx-auto text-center"
-          >
-            <h4 className="text-white font-semibold mb-2">{selectedNode.name}</h4>
-            <p className="text-white/40 text-sm">{selectedNode.description}</p>
-            <div className="mt-3 flex items-center justify-center gap-2">
-              <span className="text-[10px] font-mono text-white/20">
-                Connections: {selectedNode.connections.join(', ')}
-              </span>
-            </div>
-          </motion.div>
-        )}
       </div>
     </section>
   );

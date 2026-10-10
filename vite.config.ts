@@ -9,20 +9,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: '/ai-jobs-universe/',
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          three: ['three'],
-          r3f: ['@react-three/fiber', '@react-three/drei'],
-          motion: ['framer-motion'],
-        },
-      },
-    },
-  },
+  base: '/AI-JOBS-UNIVERSE/',
   server: {
-    port: 3000,
-    open: true,
+    port: 4312,
+    open: false,
   },
 });

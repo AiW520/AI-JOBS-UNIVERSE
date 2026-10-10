@@ -5,14 +5,13 @@ import trendData from '@/data/trendData.json';
 import { TrendData } from '@/types';
 import { useCountUp } from '@/hooks/useCountUp';
 import { useInView } from '@/hooks/useInView';
-import * as THREE from 'three';
 
 function TrendLine({ data, color, label }: { data: TrendData[]; color: string; label: string }) {
   const svgRef = useRef<SVGSVGElement>(null);
 
-  const maxVal = Math.max(...data.map((d) => d.value));
-  const minVal = Math.min(...data.map((d) => d.value));
-  const range = maxVal - minVal || 1;
+  const maxVal = 100;
+  const minVal = 0;
+  const range = maxVal - minVal;
 
   const points = data
     .map((d, i) => {
@@ -24,38 +23,33 @@ function TrendLine({ data, color, label }: { data: TrendData[]; color: string; l
 
   return (
     <div className="mb-8">
-      <div className="flex items-center gap-2 mb-2">
+      <div className="trend-line-label flex items-center gap-2 mb-2">
         <div className="w-2 h-2 rounded-full" style={{ background: color }} />
         <span className="text-xs font-mono text-white/60">{label}</span>
+        <strong>{data[data.length - 1]?.value}<small> /100</small></strong>
       </div>
-      <svg ref={svgRef} viewBox="0 0 100 100" className="w-full h-32" preserveAspectRatio="none">
+      <svg ref={svgRef} role="img" aria-label={`${label} 需求指数趋势`} viewBox="0 0 100 100" className="w-full h-32" preserveAspectRatio="none">
         <defs>
           <linearGradient id={`grad-${label}`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor={color} stopOpacity="0.3" />
             <stop offset="100%" stopColor={color} stopOpacity="0" />
           </linearGradient>
         </defs>
-        <motion.path
-          initial={{ pathLength: 0, opacity: 0 }}
-          whileInView={{ pathLength: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 2, ease: 'easeInOut' }}
+        {[10, 50, 90].map(y => <line key={y} x1="0" y1={y} x2="100" y2={y} stroke="#527367" strokeWidth="0.25" strokeDasharray="1 2" />)}
+        <path
           d={`M ${points} L 100,100 L 0,100 Z`}
           fill={`url(#grad-${label})`}
         />
-        <motion.path
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: 'easeInOut' }}
+        <path
           d={`M ${points}`}
           fill="none"
           stroke={color}
-          strokeWidth="0.3"
+          strokeWidth="0.7"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
       </svg>
+      <div className="trend-axis"><span>{data[0]?.month}</span><span>需求指数 0—100</span><span>{data[data.length - 1]?.month}</span></div>
     </div>
   );
 }
@@ -71,10 +65,10 @@ export function TrendAnalysisSection() {
   const frontendData = (trendData as TrendData[]).filter((d) => d.category === 'Frontend');
 
   const stats = [
-    { label: 'Total AI Jobs', value: 156000, suffix: '+' },
-    { label: 'Avg Salary Growth', value: 28, suffix: '%' },
-    { label: 'Remote Positions', value: 76, suffix: '%' },
-    { label: 'New Roles (2024)', value: 340, suffix: '+' },
+    { label: 'AI 岗位总量', value: 156000, suffix: '+' },
+    { label: '平均薪资增长', value: 28, suffix: '%' },
+    { label: '远程岗位占比', value: 76, suffix: '%' },
+    { label: '2024 新增岗位', value: 340, suffix: '+' },
   ];
 
   return (
@@ -83,8 +77,8 @@ export function TrendAnalysisSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="TECH TRENDS"
-          subtitle="24-month technology demand evolution and predictions"
+          title="技术趋势"
+          subtitle="观察近 24 个月的需求变化与岗位预测"
         />
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
@@ -110,22 +104,22 @@ export function TrendAnalysisSection() {
           <div className="glass p-6 md:p-8">
             <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse" />
-              AI Technology Growth
+              AI 技术增长
             </h3>
-            <TrendLine data={aiAgentData} color="#b44dff" label="AI Agent" />
-            <TrendLine data={llmData} color="#4d7cff" label="LLM Engineering" />
-            <TrendLine data={ragData} color="#00e5ff" label="RAG Systems" />
+            <TrendLine data={aiAgentData} color="#80d6b5" label="AI Agent" />
+            <TrendLine data={llmData} color="#e6bb74" label="LLM Engineering" />
+            <TrendLine data={ragData} color="#8fbee2" label="RAG Systems" />
           </div>
 
           <div className="glass p-6 md:p-8">
             <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse" />
-              Web3 & Frontend Evolution
+              Web3 与前端演进
             </h3>
-            <TrendLine data={web3Data} color="#b44dff" label="Web3 / Blockchain" />
-            <TrendLine data={frontendData} color="#4d7cff" label="Frontend Development" />
+            <TrendLine data={web3Data} color="#e6bb74" label="Web3 / Blockchain" />
+            <TrendLine data={frontendData} color="#80d6b5" label="Frontend Development" />
             <div className="mt-8 pt-6 border-t border-white/[0.05]">
-              <span className="hud-text text-xs">PREDICTION: 2025-2026</span>
+              <span className="hud-text text-xs">预测区间：2025—2026</span>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 {[
                   { label: 'AI Agent', growth: '+245%' },

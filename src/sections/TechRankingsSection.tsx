@@ -6,10 +6,10 @@ import techRankings from '@/data/techRankings.json';
 import { TechRanking } from '@/types';
 
 const categoryTabs = [
-  { key: 'ai', label: 'AI TECH' },
-  { key: 'web3', label: 'WEB3 TECH' },
-  { key: 'frontend', label: 'FRONTEND TECH' },
-  { key: 'backend', label: 'BACKEND TECH' },
+  { key: 'ai', label: 'AI 技术' },
+  { key: 'web3', label: 'Web3 技术' },
+  { key: 'frontend', label: '前端技术' },
+  { key: 'backend', label: '后端技术' },
 ];
 
 export function TechRankingsSection() {
@@ -26,8 +26,8 @@ export function TechRankingsSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="TECH RANKINGS"
-          subtitle="Real-time technology heat map and growth trends"
+          title="技术热度排行"
+          subtitle="按领域查看技能热度与增长信号"
         />
 
         <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
@@ -58,7 +58,7 @@ export function TechRankingsSection() {
           <div className="glass p-6 lg:p-8">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-3 h-3 rounded-full bg-neon-green animate-pulse" />
-              <span className="hud-text">LIVE HEAT MAP</span>
+              <span className="hud-text">实时热度分布</span>
             </div>
 
             <div className="space-y-4">
@@ -84,7 +84,7 @@ export function TechRankingsSection() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-white/[0.05]">
-              <span className="hud-text block mb-4">TREND DIRECTION</span>
+              <span className="hud-text block mb-4">增长方向</span>
               <div className="flex gap-2">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                   <motion.div

@@ -1,8 +1,7 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { Navigation } from '@/components/ui/Navigation';
-import { LoadingScreen } from '@/components/ui/LoadingScreen';
 
 const HomePage = lazy(() => import('@/pages/HomePage').then((m) => ({ default: m.HomePage })));
 const JobDetailPage = lazy(() => import('@/pages/JobDetailPage').then((m) => ({ default: m.JobDetailPage })));
@@ -81,10 +80,11 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/ai-jobs-universe">
-      <LoadingScreen />
+    <HashRouter>
+      <MotionConfig reducedMotion="user">
       <Navigation />
       <AnimatedRoutes />
-    </BrowserRouter>
+      </MotionConfig>
+    </HashRouter>
   );
 }

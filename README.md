@@ -130,7 +130,7 @@ npm install
 npm run dev
 ```
 
-启动后访问: `http://localhost:3000/ai-jobs-universe/`
+启动后访问: `http://localhost:4312/AI-JOBS-UNIVERSE/`
 
 ### 生产构建
 
@@ -142,9 +142,9 @@ npm run build
 
 ### 部署到 GitHub Pages
 
-```bash
-npm run deploy
-```
+推送到 `main` 后，`.github/workflows/deploy-pages.yml` 自动安装依赖、执行类型检查与生产构建，并通过 GitHub Pages artifact 发布。仓库 Pages 的构建来源应设为 GitHub Actions。
+
+线上地址：<https://aiw520.github.io/AI-JOBS-UNIVERSE/>。详情页使用 hash 路由，支持在 Pages 子路径下直接刷新。
 
 ---
 
@@ -286,3 +286,16 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 **Designed for the Future // Built for Tomorrow**  
 *AI JOBS UNIVERSE v2.0*
+
+## Career Observatory
+
+The Careers section now includes a real-time Three.js orbital station. Every station is backed by the existing `jobs.json` records, so category filters, search, sorting, selection, and the career directory stay in sync. Select a station or use the Focus role menu to inspect a career, then open its existing profile. Drag to orbit, scroll to zoom, and use the toolbar for camera reset, motion, scene quality, and expanded view.
+
+Three.js is loaded only when the Observatory is used. The Low quality preset, `prefers-reduced-motion`, viewport pausing, and a WebGL failure fallback keep the directory usable on slower or unsupported devices. GitHub Pages is built with the `/AI-JOBS-UNIVERSE/` base path and hash routing so career profiles refresh correctly under the static subpath.
+
+```bash
+npm run typecheck
+npm run build
+npm run dev -- --host 127.0.0.1 --port 4312
+npm run verify:browser
+```
